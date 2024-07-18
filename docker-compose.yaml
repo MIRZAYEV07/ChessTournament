@@ -1,0 +1,44 @@
+version: "3"
+services:
+
+
+  postgresql:
+    container_name: chess_postgres
+    image: postgres:13
+    hostname: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgresql_data_7:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: chess_postgresdb
+      TZ: Asia/Tashkent
+    networks:
+        - chess_network
+
+
+
+  redis:
+    image: "redis:alpine"
+    container_name: "redis"
+    ports:
+      - "6379:6379"
+    volumes:
+      - cache:/data
+    hostname: redis
+    command: redis-server
+    networks:
+      - chess_network
+
+
+volumes:
+
+  postgresql_data_6:
+  postgresql_data_7:
+  cache:
+
+
+networks:
+  chess_network:
